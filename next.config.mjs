@@ -5,62 +5,96 @@ const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
 const basePath = isGithubActions ? '/Pledg' : '';
 const assetPrefix = isGithubActions ? '/Pledg/' : '';
 
+// Set the site URL for sitemap and canonical URLs
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+  (isGithubActions ? 'https://vijayesvar.github.io/Pledg' : 'http://localhost:3000');
+
+// Set environment variable for the build
+process.env.NEXT_PUBLIC_SITE_URL = siteUrl;
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // Disable image optimization for static export
+  // Disable React StrictMode for now to prevent double rendering in development
+  reactStrictMode: false,
+  
+  // Enable static HTML export
+  output: 'export',
+  
+  // Set base path and asset prefix for GitHub Pages
+  basePath,
+  assetPrefix,
+  
+  // Configure image optimization
   images: {
     unoptimized: true,
     loader: 'custom',
-    path: assetPrefix,
+    loaderFile: './src/image-loader.js',
+    domains: [],
   },
-  // For GitHub Pages
-  basePath,
-  assetPrefix,
-  output: 'export',
-  distDir: 'out',
-  trailingSlash: true,
-  // Ensure static export works with next/link
-  experimental: {
-    appDir: true,
-    // Enable CSS modules
-    css: true,
+  
+  // Configure page extensions
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  
+  // Environment variables
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_SITE_URL: siteUrl,
   },
-  // Fix for CSS loading
+  
+  // Generate a static export
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
+  
+  // Webpack configuration
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
+        path: false,
+        os: false,
       };
     }
     
-    // Fix for CSS loading
-    const cssLoader = config.module.rules.find(
-      (rule) => rule.test && rule.test.test('.css')
-    );
+    // Handle CSS files
+    const rules = config.module.rules
+      .find((rule) => typeof rule.oneOf === 'object')
+      ?.oneOf
+      ?.filter(Boolean) || [];
     
-    if (cssLoader) {
-      cssLoader.include = [];
-      cssLoader.exclude = /node_modules/;
-    }
+    rules.forEach((rule) => {
+      if (Array.isArray(rule.use)) {
+        rule.use.forEach((moduleLoader) => {
+          if (typeof moduleLoader === 'object' && 
+              moduleLoader.loader && 
+              typeof moduleLoader.loader === 'string' && 
+              moduleLoader.loader.includes('css-loader') &&
+              moduleLoader.options) {
+            moduleLoader.options.url = false;
+          }
+        });
+      }
+    });
     
     return config;
   },
-  // Environment variables
-  env: {
-    NEXT_PUBLIC_BASE_PATH: basePath,
+  
+  // Disable TypeScript type checking during build
+  typescript: {
+    ignoreBuildErrors: true,
   },
-}
+  
+  // Disable ESLint during build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
-// For static export
+// For static export in production
 if (process.env.NODE_ENV === 'production') {
   nextConfig.assetPrefix = assetPrefix;
 }
 
-export default nextConfig
+export default nextConfig;

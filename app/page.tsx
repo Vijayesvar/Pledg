@@ -83,6 +83,9 @@ export default function PledgLanding() {
               <Link href="#faq" className="text-gray-600 hover:text-blue-600 transition-colors">
                 FAQ
               </Link>
+              <Link href="/test" className="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">
+                Test Page
+              </Link>
             </nav>
           </div>
         </div>
