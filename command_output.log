@@ -1,0 +1,27 @@
+
+Command: shopt -s histappend
+Output:
+
+Exit Code: 0
+----
+Command: pwd
+Output:
+/home/vijay/Pledg
+Exit Code: 0
+----
+Command: npm install
+Output:
+
+up to date, audited 273 packages in 1s
+
+44 packages are looking for funding
+  run `npm fund` for details
+
+1 low severity vulnerability
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+Exit Code: 0
+----

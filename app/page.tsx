@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Shield, Zap, Users, TrendingUp, Lock, Clock, CheckCircle, ArrowRight, Coins, CreditCard, Star, Mail, Check } from "lucide-react"
 import Link from "next/link"
 import { useState } from 'react'
+import Image from 'next/image'
 import { Input } from "@/components/ui/input"
 
 export default function PledgLanding() {
@@ -25,48 +26,65 @@ export default function PledgLanding() {
     setIsSubmitting(true)
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      setIsSubmitted(true)
-      setEmail('')
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to subscribe');
+      }
+
+      setIsSubmitted(true);
+      setEmail('');
       
       // Reset success message after 5 seconds
       setTimeout(() => {
-        setIsSubmitted(false)
-      }, 5000)
+        setIsSubmitted(false);
+      }, 5000);
       
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      alert('Failed to submit. Please try again.')
+    } catch (error: unknown) {
+      console.error('Error submitting form:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit. Please try again.';
+      alert(errorMessage);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <img src="pledg-logo.png" alt="Pledg Logo" className="w-8 h-8" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Pledg
-            </span>
+      <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex-shrink-0 flex items-center">
+              <div className="flex items-center">
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Pledg
+                </span>
+              </div>
+            </div>
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="#how-it-works" className="text-gray-600 hover:text-blue-600 transition-colors">
+                How it Works
+              </Link>
+              <Link href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Features
+              </Link>
+              <Link href="#security" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Security
+              </Link>
+              <Link href="#faq" className="text-gray-600 hover:text-blue-600 transition-colors">
+                FAQ
+              </Link>
+            </nav>
           </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#how-it-works" className="text-gray-600 hover:text-blue-600 transition-colors">
-              How it Works
-            </Link>
-            <Link href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">
-              Features
-            </Link>
-            <Link href="#security" className="text-gray-600 hover:text-blue-600 transition-colors">
-              Security
-            </Link>
-            <Link href="#faq" className="text-gray-600 hover:text-blue-600 transition-colors">
-              FAQ
-            </Link>
-          </nav>
         </div>
       </header>
 
@@ -588,7 +606,7 @@ export default function PledgLanding() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            Join thousands of users who are already benefiting from crypto-backed INR loans on Pledg
+            Be among the first to experience our upcoming crypto-backed INR loan platform
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <a 
@@ -651,8 +669,7 @@ export default function PledgLanding() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <img src="/pledg-logo.png" alt="Pledg Logo" className="w-8 h-8" />
+              <div className="mb-4">
                 <span className="text-2xl font-bold">Pledg</span>
               </div>
               <p className="text-gray-400 mb-4">India's first peer-to-peer crypto-backed INR loan platform.</p>
