@@ -48,7 +48,7 @@ export default function PledgLanding() {
       <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <img src="/public/pledg-logo.png" alt="Pledg Logo" className="w-8 h-8" />
+            <img src="./public/pledg-logo.png" alt="Pledg Logo" className="w-8 h-8" />
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Pledg
             </span>
