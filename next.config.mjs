@@ -1,4 +1,6 @@
-/** @type {import('next').NextConfig} */
+// @ts-check
+
+/** @type {boolean} */
 const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
 
 // Set the base path for GitHub Pages
@@ -10,7 +12,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||
   (isGithubActions ? 'https://vijayesvar.github.io/Pledg' : 'http://localhost:3000');
 
 // Set environment variable for the build
-process.env.NEXT_PUBLIC_SITE_URL = siteUrl;
+if (typeof process !== 'undefined') {
+  process.env.NEXT_PUBLIC_SITE_URL = siteUrl;
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
