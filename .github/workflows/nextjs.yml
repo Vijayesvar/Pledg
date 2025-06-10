@@ -51,9 +51,7 @@ jobs:
         env:
           SITE_URL: https://vijayesvar.github.io/Pledg
           NEXT_PUBLIC_SITE_URL: https://vijayesvar.github.io/Pledg
-        run: |
-          npm run build
-          npm run export
+        run: npm run build
       
       - name: Prepare for GitHub Pages
         run: |
