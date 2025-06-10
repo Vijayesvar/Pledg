@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { Shield, Zap, Users, TrendingUp, Lock, Clock, CheckCircle, ArrowRight, Coins, CreditCard, Star, Mail, Check } from "lucide-react"
 import Link from "next/link"
 import { useState } from 'react'
-import Image from 'next/image'
 import { Input } from "@/components/ui/input"
 
 export default function PledgLanding() {
