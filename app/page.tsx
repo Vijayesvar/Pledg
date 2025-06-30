@@ -171,9 +171,9 @@ export default function PledgLanding() {
                 <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
                   💰
                 </div>
-                <h4 className="font-semibold text-lg mb-2">2. Deposit Crypto</h4>
+                <h4 className="font-semibold text-lg mb-2">2. Lock Collateral</h4>
                 <p className="text-gray-600">
-                  Choose supported assets (BTC, ETH, USDT)
+                  Choose supported crypto (BTC, ETH, USDT)
                 </p>
               </div>
               <div className="text-center">
@@ -220,11 +220,12 @@ export default function PledgLanding() {
                 </div>
 
                 <div className="border-l-4 border-blue-500 pl-4">
-                  <h4 className="font-semibold text-lg mb-2">2. Deposit Collateral</h4>
+                  <h4 className="font-semibold text-lg mb-2">2. Lock Collateral</h4>
                   <ul className="text-gray-600 space-y-1 text-sm">
                     <li>• Choose supported crypto (BTC, ETH, USDT)</li>
-                    <li>• Deposit into a secure, smart contract wallet</li>
+                    <li>• Lock into a secure, smart contract wallet</li>
                     <li>• Get real-time collateral valuation</li>
+                    <li className="opacity-70">* Bitcoin DLC integration for BTC collateral</li>
                   </ul>
                 </div>
 
