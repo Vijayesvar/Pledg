@@ -223,9 +223,9 @@ export default function PledgLanding() {
                   <h4 className="font-semibold text-lg mb-2">2. Lock Collateral</h4>
                   <ul className="text-gray-600 space-y-1 text-sm">
                     <li>• Choose supported crypto (BTC, ETH, USDT)</li>
+                    <li>• Bitcoin DLC integration for BTC collateral</li>
                     <li>• Lock into a secure, smart contract wallet</li>
                     <li>• Get real-time collateral valuation</li>
-                    <li className="opacity-70">* Bitcoin DLC integration for BTC collateral</li>
                   </ul>
                 </div>
 
