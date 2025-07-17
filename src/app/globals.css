@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --boring-tag-gradient: linear-gradient(to top, #EEEEEE, #FFFFFF, #EEEEEE);
+  --button-fancy-gradient: linear-gradient(to bottom, #6F78D4, #4D549D);
+  --button-boring-gradient: linear-gradient(to top, #FFFFFF, #F4F4F4);
+  --card-gradient: linear-gradient(to bottom, #FFFFFF, #D0D4FA);
+  --tag-gradient: linear-gradient(to bottom, #6F78D4, #4D549D);
+  --color-primary: #6F78D4;
+  --color-secondary: #4D549D;
+  --color-tertiary: #D0D4FA;
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-geist-mono);
+  --boring-tag-gradient: var(--boring-tag-gradient);
+  --button-fancy-gradient: var(--button-fancy-gradient);
+  --button-boring-gradient: var(--button-boring-gradient);
+  --card-gradient: var(--card-gradient);
+  --tag-gradient: var(--tag-gradient);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-tertiary: var(--color-tertiary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  font-size: 95%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
