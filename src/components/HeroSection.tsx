@@ -30,7 +30,7 @@ export default function HeroSection() {
         Crypto-Backed INR Loans made Simple
       </h1>
       <motion.div
-        className="absolute lg:top-[-14rem] lg:left-[-24rem] md:left-[-10rem] md:top-[3rem]"
+        className="absolute lg:top-[-14rem] lg:left-[-24rem]"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -38,7 +38,7 @@ export default function HeroSection() {
         <Coins />
       </motion.div>
       <motion.div
-        className="absolute top-[-26rem] right-[-37rem]"
+        className="absolute lg:top-[-26rem] lg:right-[-37rem]"
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2,  ease: "easeOut" }}
