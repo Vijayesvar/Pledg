@@ -11,8 +11,8 @@ export default function Security() {
       <div className="flex items-center justify-center gap-8 mt-8">
         <SectionLines left={false} />
         <div className="flex flex-col items-center">
-            <h2 className="text-foreground/75 text-3xl font-semibold">Our Security First</h2>
-            <h1 className="text-[3rem] font-semibold">Technical Implementation</h1>
+            <h2 className="text-foreground/75 text-3xl font-semibold text-center">Our Security First</h2>
+            <h1 className="text-[3rem] font-semibold text-center">Technical Implementation</h1>
             <h3 className="text-[1.2rem] font-medium max-w-[43rem] text-foreground/50 text-center leading-[1.3]">
             Explore our security first technical implementation that puts <span className="text-foreground/70">forgeability</span> and <span className="text-foreground/70">reliability</span> before everything else
             </h3>

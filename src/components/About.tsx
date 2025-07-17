@@ -74,7 +74,7 @@ export default function About() {
       <div className="flex items-center justify-center gap-8 mt-8">
         <SectionLines left={false} />
         <div className="flex flex-col items-center">
-          <h1 className="text-[3rem] font-semibold">How Pledg Works</h1>
+          <h1 className="text-[3rem] font-semibold text-center">How Pledg Works</h1>
           <h3 className="text-[1.2rem] font-medium max-w-[31rem] text-foreground/50 text-center leading-[1.3]">
             A comprehensive <span className="text-foreground/70">guide</span> to crypto-backed INR lending on our peer-to-peer platform
           </h3>

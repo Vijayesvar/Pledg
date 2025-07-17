@@ -18,7 +18,7 @@ export default function HeroSection() {
 
   return (
     <motion.div
-      className="relative flex flex-col gap-4 pt-38 items-center max-w-screen overflow-hidden"
+      className="relative flex flex-col gap-4 pt-38 items-center overflow-hidden"
       initial={{ opacity: 0, y: -60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -30,7 +30,7 @@ export default function HeroSection() {
         Crypto-Backed INR Loans made Simple
       </h1>
       <motion.div
-        className="absolute top-[-14rem] left-[-24rem]"
+        className="absolute lg:top-[-14rem] lg:left-[-24rem] md:left-[-10rem] md:top-[3rem]"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}

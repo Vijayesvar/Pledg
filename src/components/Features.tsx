@@ -12,7 +12,7 @@ export default function Features() {
         <SectionLines left={false} />
         <div className="flex flex-col items-center">
         <h2 className="text-foreground/75 text-3xl font-semibold">Understanding why</h2>
-            <h1 className="text-[3rem] font-semibold">We should be your top Priority</h1>
+            <h1 className="text-[3rem] font-semibold text-center">We should be your top Priority</h1>
             <h3 className="text-[1.2rem] font-medium max-w-[43rem] text-foreground/50 text-center leading-[1.3]">
             Built for the modern <span className="text-foreground/70">Indian crypto ecosystem</span> with security and transparency at its core
             </h3>

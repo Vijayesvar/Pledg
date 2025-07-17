@@ -20,10 +20,16 @@ export default function ContactUs() {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
-    await fetch('/api/contact', {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/subscribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        mobile: form.mobile,
+        location: form.location,
+        message: form.message,
+      }),
     });
     setLoading(false);
     setSuccess(true);
@@ -38,7 +44,7 @@ export default function ContactUs() {
       <div className="flex items-center justify-center gap-8 mt-8">
         <SectionLines left={false} />
         <div className="flex flex-col items-center">
-          <h1 className="text-[3rem] font-semibold">Contact Us</h1>
+          <h1 className="text-[3rem] font-semibold text-center">Contact Us</h1>
           <h3 className="text-[1.2rem] font-medium max-w-[31rem] text-foreground/50 text-center leading-[1.3]">
             Reach out to us to get <span className="text-foreground/75">support</span> and <span className="text-foreground/75">exciting benefits</span>
           </h3>
