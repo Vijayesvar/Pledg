@@ -5,8 +5,8 @@ export default function Coins() {
     <Image
       src="/coins.png"
       alt="Coins"
-      width={900}
-      height={900}
+      width={1000}
+      height={1000}
       className="lg:w-full lg:h-full md:w-[0%] md:h-[0%]"
       priority
     />
