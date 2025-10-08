@@ -169,6 +169,12 @@ if (submitBtn && emailInput) {
       return;
     }
 
+    // Show loading state
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Joining...';
+    submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
     try {
       localStorage.setItem('pledg_waitlist_email', email);
     } catch {}
@@ -187,6 +193,11 @@ if (submitBtn && emailInput) {
     } catch (err) {
       showAlert('Subscription failed. Please try again.', false);
       console.error(err);
+    } finally {
+      // Reset button state
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
     }
   });
 }
