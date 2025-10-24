@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gradient-to-b from-slate-900 to-black text-white;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:shadow-primary-500/20;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full font-medium hover:from-primary-400/90 hover:to-primary-600/90 transform hover:scale-105 transition-all duration-300 shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-primary-400/30 rounded-full font-medium hover:bg-primary-400/10 hover:border-primary-400/60 transition-all duration-300 backdrop-blur-sm;
+  }
+  
+  .btn-neopop {
+    @apply px-8 py-4 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-2xl font-semibold text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-gray-900/50 border-2 border-gray-700 rounded-xl focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-400/20 transition-all duration-300 backdrop-blur-sm;
+  }
+  
+  .input-neopop {
+    @apply w-full px-6 py-4 bg-gray-900/80 border-2 border-primary-400/30 rounded-2xl focus:outline-none focus:border-primary-400 focus:ring-4 focus:ring-primary-400/20 transition-all duration-300 backdrop-blur-sm text-white placeholder-gray-400;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-20;
+  }
+  
+  .container-custom {
+    @apply container mx-auto px-4;
+  }
+  
+  .card-neopop {
+    @apply bg-gradient-to-br from-gray-800/40 to-gray-900/60 border-2 border-primary-400/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 hover:border-primary-400/40;
+  }
+  
+  .card-neopop-glow {
+    @apply bg-gradient-to-br from-primary-400/10 via-primary-500/5 to-blue-500/10 border-2 border-primary-400/30 rounded-2xl p-8 backdrop-blur-sm shadow-2xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-primary-400/50;
+  }
+  
+  .text-neopop-gradient {
+    @apply bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent;
+  }
+  
+  .icon-neopop {
+    @apply w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg;
+  }
+  
+  .badge-neopop {
+    @apply px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 rounded-full text-white text-sm font-semibold shadow-lg;
+  }
+  
+  .badge-neopop-warning {
+    @apply px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full text-white text-sm font-semibold shadow-lg;
+  }
+  
+  .badge-neopop-error {
+    @apply px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 rounded-full text-white text-sm font-semibold shadow-lg;
+  }
+  
+  .glass-neopop {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl;
+  }
+  
+  .neopop-glow {
+    @apply relative;
+  }
+  
+  .neopop-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary-400/20 via-primary-500/20 to-primary-600/20 rounded-2xl blur-xl -z-10;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .neopop-animate {
+    @apply animate-neopop-bounce;
+  }
+  
+  .neopop-pulse {
+    @apply animate-neopop-pulse;
+  }
+  
+  .neopop-slide {
+    @apply animate-neopop-slide;
+  }
+}
