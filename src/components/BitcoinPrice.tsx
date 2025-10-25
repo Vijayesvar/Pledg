@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, RefreshCw } from 'lucide-react'
 import axios from 'axios'
-import { API_CONFIG, getCoinAPIHeaders, getCoinMarketCapHeaders, fetchBitcoinPriceFallback } from '@/config/api'
+import { API_CONFIG, getCoinMarketCapHeaders } from '@/config/api'
 
 interface BitcoinPriceData {
   price: number
@@ -21,56 +21,46 @@ export function BitcoinPrice() {
       setLoading(true)
       setError(null)
       
-      // Try CoinMarketCap first (most reliable)
-      try {
-        const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`, {
-          headers: getCoinMarketCapHeaders()
-        })
-        
-        const btcData = response.data.data.BTC
-        const inrQuote = btcData.quote.INR
-        
-        setPriceData({
-          price: inrQuote.price,
-          change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
-          changePercentage: inrQuote.percent_change_24h,
-          lastUpdated: new Date()
-        })
-        return // Success with CoinMarketCap
-      } catch (cmcErr) {
-        console.log('CoinMarketCap failed, trying CoinGecko:', cmcErr)
-      }
-      
-      // Fallback to CoinGecko
-      try {
-        const fallbackData = await fetchBitcoinPriceFallback()
-        setPriceData({
-          price: fallbackData.price,
-          change24h: fallbackData.change24h,
-          changePercentage: fallbackData.changePercentage,
-          lastUpdated: new Date()
-        })
-        return // Success with CoinGecko
-      } catch (coingeckoErr) {
-        console.log('CoinGecko failed, trying CoinAPI:', coingeckoErr)
-      }
-      
-      // Final fallback to CoinAPI
-      const response = await axios.get(`${API_CONFIG.COINAPI_BASE_URL}${API_CONFIG.ENDPOINTS.EXCHANGE_RATE('BTC', 'INR')}`, {
-        headers: getCoinAPIHeaders()
+      // Use only CoinMarketCap API
+      const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`, {
+        headers: getCoinMarketCapHeaders()
       })
       
-      const price = response.data.rate
+      const btcData = response.data.data.BTC
+      const inrQuote = btcData.quote.INR
       
-      setPriceData({
-        price,
-        change24h: 0,
-        changePercentage: 0,
+      const newPriceData = {
+        price: inrQuote.price,
+        change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
+        changePercentage: inrQuote.percent_change_24h,
         lastUpdated: new Date()
-      })
+      }
+      
+      setPriceData(newPriceData)
+      
+      // Store the last successful price in localStorage for fallback
+      localStorage.setItem('lastBitcoinPrice', JSON.stringify(newPriceData))
+      
     } catch (err) {
-      console.error('All APIs failed:', err)
-      setError('Failed to fetch Bitcoin price')
+      console.error('CoinMarketCap API failed:', err)
+      
+      // Use last recorded price as fallback
+      const lastPriceData = localStorage.getItem('lastBitcoinPrice')
+      if (lastPriceData) {
+        try {
+          const parsedData = JSON.parse(lastPriceData)
+          setPriceData({
+            ...parsedData,
+            lastUpdated: new Date(parsedData.lastUpdated)
+          })
+          setError('Using last recorded price - API temporarily unavailable')
+        } catch (parseErr) {
+          console.error('Failed to parse last price data:', parseErr)
+          setError('Failed to fetch Bitcoin price')
+        }
+      } else {
+        setError('Failed to fetch Bitcoin price')
+      }
     } finally {
       setLoading(false)
     }

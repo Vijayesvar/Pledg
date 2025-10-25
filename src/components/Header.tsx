@@ -74,10 +74,10 @@ export function Header() {
           <div className="flex items-center gap-4">
             {!isBenefitsPage && (
               <Link
-                to="/#faq"
+                to="/#waitlist"
                 onClick={(e) => {
                   e.preventDefault()
-                  handleNavigation('/#faq')
+                  handleNavigation('/#waitlist')
                 }}
                 className="btn-primary hidden md:inline-flex"
               >
@@ -128,11 +128,11 @@ export function Header() {
                     </Link>
                   ))}
                   <Link
-                    to="/#faq"
+                    to="/#waitlist"
                     onClick={(e) => {
                       e.preventDefault()
                       setIsMenuOpen(false)
-                      handleNavigation('/#faq')
+                      handleNavigation('/#waitlist')
                     }}
                     className="btn-primary mt-4"
                   >

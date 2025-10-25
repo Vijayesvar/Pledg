@@ -19,50 +19,55 @@ export function BitcoinStats() {
   useEffect(() => {
     const fetchBitcoinStats = async () => {
       try {
-        // Try CoinMarketCap first (most reliable)
-        try {
-          const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_DETAILED}`, {
-            headers: getCoinMarketCapHeaders()
-          })
-          
-          const btcData = response.data.data['1'] // Bitcoin ID is 1
-          const inrQuote = btcData.quote.INR
-          
-          setStats({
-            price: inrQuote.price,
-            change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
-            changePercentage: inrQuote.percent_change_24h,
-            marketCap: inrQuote.market_cap,
-            volume24h: inrQuote.volume_24h
-          })
-          return // Success with CoinMarketCap
-        } catch (cmcErr) {
-          console.log('CoinMarketCap failed, trying CoinGecko:', cmcErr)
+        // Use only CoinMarketCap API
+        const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_DETAILED}`, {
+          headers: getCoinMarketCapHeaders()
+        })
+        
+        const btcData = response.data.data['1'] // Bitcoin ID is 1
+        const inrQuote = btcData.quote.INR
+        
+        const newStats = {
+          price: inrQuote.price,
+          change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
+          changePercentage: inrQuote.percent_change_24h,
+          marketCap: inrQuote.market_cap,
+          volume24h: inrQuote.volume_24h
         }
         
-        // Fallback to CoinGecko
-        const response = await fetch(`${API_CONFIG.COINGECKO_BASE_URL}/${API_CONFIG.ENDPOINTS.COINGECKO_DETAILED}`)
-        const data = await response.json()
+        setStats(newStats)
         
-        const marketData = data.market_data
+        // Store the last successful stats in localStorage for fallback
+        localStorage.setItem('lastBitcoinStats', JSON.stringify(newStats))
         
-        setStats({
-          price: marketData.current_price.inr,
-          change24h: marketData.price_change_24h_in_currency.inr,
-          changePercentage: marketData.price_change_percentage_24h_in_currency.inr,
-          marketCap: marketData.market_cap.inr,
-          volume24h: marketData.total_volume.inr
-        })
       } catch (error) {
-        console.error('Error fetching Bitcoin stats:', error)
-        // Fallback data
-        setStats({
-          price: 5000000,
-          change24h: 0,
-          changePercentage: 0,
-          marketCap: 100000000000000, // 100 trillion INR
-          volume24h: 5000000000000 // 5 trillion INR
-        })
+        console.error('CoinMarketCap API failed:', error)
+        
+        // Use last recorded stats as fallback
+        const lastStatsData = localStorage.getItem('lastBitcoinStats')
+        if (lastStatsData) {
+          try {
+            const parsedData = JSON.parse(lastStatsData)
+            setStats(parsedData)
+          } catch (parseErr) {
+            console.error('Failed to parse last stats data:', parseErr)
+            setStats({
+              price: 0,
+              change24h: 0,
+              changePercentage: 0,
+              marketCap: 0,
+              volume24h: 0
+            })
+          }
+        } else {
+          setStats({
+            price: 0,
+            change24h: 0,
+            changePercentage: 0,
+            marketCap: 0,
+            volume24h: 0
+          })
+        }
       } finally {
         setLoading(false)
       }

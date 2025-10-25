@@ -60,7 +60,7 @@ export function WaitlistForm() {
   }
 
   return (
-    <section className="bg-gradient-to-r from-primary-900/50 to-gray-900 section-padding">
+    <section id="waitlist" className="bg-gradient-to-r from-primary-900/50 to-gray-900 section-padding">
       <div className="container-custom text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
