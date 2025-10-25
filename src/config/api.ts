@@ -40,7 +40,7 @@ export const fetchBitcoinPriceFallback = async () => {
   } catch (error) {
     console.error('CoinGecko fallback failed:', error)
     return {
-      price: 5000000, // Fallback price
+      price: 10000000, // Fallback price
       change24h: 0,
       changePercentage: 0
     }
