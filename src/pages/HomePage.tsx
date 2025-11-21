@@ -6,6 +6,8 @@ import { FAQ } from '@/components/FAQ'
 import { NeopopButton } from '@/components/NeopopButton'
 import { NeopopCard } from '@/components/NeopopCard'
 import { BitcoinPrice } from '@/components/BitcoinPrice'
+import { ScrollReveal } from '@/components/ScrollReveal'
+import { AnimatedBackground } from '@/components/AnimatedBackground'
 
 export function Home() {
   const features = [
@@ -115,8 +117,11 @@ export function Home() {
 
   return (
     <>
+      {/* Animated Background */}
+      <AnimatedBackground />
+
       {/* Hero Section */}
-      <section className="container-custom py-16 md:py-28">
+      <section className="container-custom py-16 md:py-28 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -124,13 +129,17 @@ export function Home() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h1 className="font-bold leading-tight text-4xl md:text-6xl">
-              <span className="gradient-text">Bitcoin-Backed</span>
+            <motion.h1
+              className="font-bold leading-tight text-4xl md:text-6xl"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="gradient-text-animated text-glow">Bitcoin-Backed</span>
               <br />
               <span className="text-white">Loans for</span>
               <br />
               <span className="text-white">Your Financial Freedom</span>
-            </h1>
+            </motion.h1>
             <p className="text-lg text-gray-300 md:pr-12">
               Access immediate liquidity with your BTC assets. Disbursements available in INR via secure bank transfer at 50% LTV with industry-leading security.
             </p>
@@ -145,7 +154,7 @@ export function Home() {
                 <ArrowRight size={20} />
               </NeopopButton>
               <NeopopButton
-                variant="neopop"
+                variant="secondary"
                 size="lg"
                 onClick={() => window.location.href = '/benefits'}
                 className="flex items-center justify-center gap-2"
@@ -154,10 +163,14 @@ export function Home() {
                 <ArrowRight size={20} />
               </NeopopButton>
             </div>
-            <div className="flex items-center gap-2 text-gray-400">
-              <Shield className="text-green-400" size={20} />
+            <motion.div
+              className="flex items-center gap-2 text-gray-400"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Shield className="text-green-400 animate-pulse" size={20} />
               <span>Enterprise-grade security</span>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -166,17 +179,21 @@ export function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="absolute -top-20 -right-20 h-64 w-64 bg-primary-500/30 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-10 -left-10 h-40 w-40 bg-blue-500/20 rounded-full blur-3xl"></div>
-            <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border border-gray-700 transform hover:-rotate-1 transition-transform duration-300 shadow-xl">
+            <div className="absolute -top-20 -right-20 h-64 w-64 bg-primary-500/30 rounded-full blur-3xl animate-float"></div>
+            <div className="absolute -bottom-10 -left-10 h-40 w-40 bg-blue-500/20 rounded-full blur-3xl animate-float-delayed"></div>
+            <motion.div
+              className="relative glass-card p-6 transform hover:scale-105 transition-transform duration-500 shadow-neopop-lg"
+              whileHover={{ rotateY: 5, rotateX: 5 }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 bg-gradient-to-r from-primary-400 to-primary-500 rounded-full flex items-center justify-center">
+                  <div className="h-8 w-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-glow-sm">
                     <span className="text-white font-bold text-sm">P</span>
                   </div>
                   <span className="font-bold">Pledg</span>
                 </div>
-                <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">Secure</span>
+                <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium animate-pulse">Secure</span>
               </div>
               <div className="space-y-4">
                 <ul className="space-y-2 text-gray-300">
@@ -197,31 +214,33 @@ export function Home() {
                     <span>On-chain address provided to monitor collateral</span>
                   </li>
                 </ul>
-                <button className="w-full py-3 bg-primary-500 rounded-lg font-medium hover:bg-primary-600 transition-colors">
+                <button className="w-full py-3 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg font-medium hover:shadow-glow-lg transition-all duration-300 transform hover:scale-105">
                   Apply Now
                 </button>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Bitcoin Price Section */}
-      <section className="container-custom py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-neopop-gradient">Live Bitcoin Price</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">Track current Bitcoin value to make informed decisions about your collateral</p>
-        </motion.div>
+      <ScrollReveal>
+        <section className="container-custom py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-neopop-gradient">Live Bitcoin Price</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">Track current Bitcoin value to make informed decisions about your collateral</p>
+          </motion.div>
 
-        <div className="flex justify-center">
-          <BitcoinPrice />
-        </div>
-      </section>
+          <div className="flex justify-center">
+            <BitcoinPrice />
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* Benefits CTA Section */}
       <section className="bg-gradient-to-r from-primary-900/30 to-gray-900/50 py-16">
@@ -269,33 +288,36 @@ export function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="container-custom section-padding">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Pledg</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">Access the financial flexibility you need without selling your Bitcoin assets</p>
-        </motion.div>
+      <ScrollReveal delay={100}>
+        <section id="features" className="container-custom section-padding">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Pledg</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">Access the financial flexibility you need without selling your Bitcoin assets</p>
+          </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature) => (
-            <NeopopCard
-              key={feature.title}
-              variant="default"
-              className="p-6"
-            >
-              <div className="icon-neopop mb-4">
-                <feature.icon className="text-white" size={24} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-neopop-gradient">{feature.title}</h3>
-              <p className="text-gray-400">{feature.description}</p>
-            </NeopopCard>
-          ))}
-        </div>
-      </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <ScrollReveal key={feature.title} delay={index * 100}>
+                <NeopopCard
+                  variant="default"
+                  className="p-6 hover-lift"
+                >
+                  <div className="icon-neopop mb-4">
+                    <feature.icon className="text-white" size={24} />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-neopop-gradient">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </NeopopCard>
+              </ScrollReveal>
+            ))}
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* How It Works Section */}
       <section id="how-it-works" className="container-custom section-padding relative">

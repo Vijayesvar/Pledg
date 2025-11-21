@@ -21,15 +21,24 @@ export function BitcoinPrice() {
       setLoading(true)
       setError(null)
 
-      // Use CoinGecko API (No API key needed for basic access)
-      const response = await axios.get(`${API_CONFIG.COINGECKO_BASE_URL}/${API_CONFIG.ENDPOINTS.COINGECKO_PRICE}`)
+      // Use CoinMarketCap API
+      const response = await axios.get(
+        `${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`,
+        {
+          headers: {
+            'X-CMC_PRO_API_KEY': API_CONFIG.COINMARKETCAP_KEY,
+            'Accept': 'application/json'
+          }
+        }
+      )
 
-      const btcData = response.data.bitcoin
+      const btcData = response.data.data.BTC
+      const quote = btcData.quote.INR
 
       const newPriceData = {
-        price: btcData.inr,
-        change24h: (btcData.inr * btcData.inr_24h_change) / 100,
-        changePercentage: btcData.inr_24h_change,
+        price: quote.price,
+        change24h: quote.price * (quote.percent_change_24h / 100),
+        changePercentage: quote.percent_change_24h,
         lastUpdated: new Date()
       }
 
@@ -39,7 +48,7 @@ export function BitcoinPrice() {
       localStorage.setItem('lastBitcoinPrice', JSON.stringify(newPriceData))
 
     } catch (err) {
-      console.error('CoinGecko API failed:', err)
+      console.error('CoinMarketCap API failed:', err)
 
       // Use last recorded price as fallback
       const lastPriceData = localStorage.getItem('lastBitcoinPrice')
@@ -137,7 +146,7 @@ export function BitcoinPrice() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-white">Bitcoin Price</h3>
-            <p className="text-sm text-gray-400">Live in INR</p>
+            <p className="text-sm text-gray-400">Live in INR (CoinMarketCap)</p>
           </div>
         </div>
         <button

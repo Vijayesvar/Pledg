@@ -37,13 +37,25 @@ export function WaitlistForm() {
     setSubmitStatus('idle')
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Send data to backend API
+      const response = await fetch('http://localhost:3001/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // Here you would typically send the data to your backend
-      console.log('Waitlist submission:', formData)
+      const data = await response.json()
 
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to join waitlist')
+      }
+
+      console.log('Waitlist submission successful:', data)
       setSubmitStatus('success')
+
+      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -53,6 +65,7 @@ export function WaitlistForm() {
         notes: '',
       })
     } catch (error) {
+      console.error('Error submitting waitlist:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
