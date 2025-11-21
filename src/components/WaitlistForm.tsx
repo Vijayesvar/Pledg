@@ -39,10 +39,10 @@ export function WaitlistForm() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
-      
+
       // Here you would typically send the data to your backend
       console.log('Waitlist submission:', formData)
-      
+
       setSubmitStatus('success')
       setFormData({
         name: '',
@@ -60,7 +60,7 @@ export function WaitlistForm() {
   }
 
   return (
-    <section id="waitlist" className="bg-gradient-to-r from-primary-900/50 to-gray-900 section-padding">
+    <section id="waitlist" className="bg-gradient-to-r from-primary-900/50 to-gray-900 section-padding scroll-mt-32">
       <div className="container-custom text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -71,7 +71,7 @@ export function WaitlistForm() {
           <p className="text-gray-300 max-w-2xl mx-auto mb-10">
             Join our waitlist today and be among the first to access our Bitcoin-backed loan services when we launch.
           </p>
-          
+
           <NeopopCard variant="glow" className="max-w-3xl mx-auto">
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start text-left">
               {/* Name */}

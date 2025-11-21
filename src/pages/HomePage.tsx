@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Shield, CheckCircle, Percent, Banknote, Lock, Zap, RefreshCw, Headphones, AlertCircle } from 'lucide-react'
-import { Link } from 'react-router-dom'
+
 import { WaitlistForm } from '@/components/WaitlistForm'
 import { FAQ } from '@/components/FAQ'
 import { NeopopButton } from '@/components/NeopopButton'
@@ -138,7 +138,7 @@ export function Home() {
               <NeopopButton
                 variant="neopop"
                 size="lg"
-                onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
                 className="flex items-center justify-center gap-2"
               >
                 <span>Join Waitlist</span>
@@ -217,7 +217,7 @@ export function Home() {
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-neopop-gradient">Live Bitcoin Price</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">Track current Bitcoin value to make informed decisions about your collateral</p>
         </motion.div>
-        
+
         <div className="flex justify-center">
           <BitcoinPrice />
         </div>
@@ -238,7 +238,7 @@ export function Home() {
               <span className="text-neopop-gradient">Matter in India</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Discover how Bitcoin-backed loans can save you lakhs in taxes, preserve your crypto holdings, 
+              Discover how Bitcoin-backed loans can save you lakhs in taxes, preserve your crypto holdings,
               and provide instant liquidity in INR without selling your Bitcoin.
             </p>
             <div className="flex justify-center">
@@ -281,7 +281,7 @@ export function Home() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 {features.map((feature) => (
+          {features.map((feature) => (
             <NeopopCard
               key={feature.title}
               variant="default"
@@ -300,7 +300,7 @@ export function Home() {
       {/* How It Works Section */}
       <section id="how-it-works" className="container-custom section-padding relative">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-80 w-80 bg-primary-500/10 rounded-full blur-3xl -z-10"></div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -337,16 +337,7 @@ export function Home() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="text-center mt-12"
-        >
-          <Link to="/#faq" className="btn-primary text-lg">
-            Join Waitlist Now
-          </Link>
-        </motion.div>
+
       </section>
 
       {/* Security Section */}

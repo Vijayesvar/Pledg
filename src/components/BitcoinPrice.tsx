@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, RefreshCw } from 'lucide-react'
 import axios from 'axios'
-import { API_CONFIG, getCoinMarketCapHeaders } from '@/config/api'
+import { API_CONFIG } from '@/config/api'
 
 interface BitcoinPriceData {
   price: number
@@ -20,30 +20,27 @@ export function BitcoinPrice() {
     try {
       setLoading(true)
       setError(null)
-      
-      // Use only CoinMarketCap API
-      const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`, {
-        headers: getCoinMarketCapHeaders()
-      })
-      
-      const btcData = response.data.data.BTC
-      const inrQuote = btcData.quote.INR
-      
+
+      // Use CoinGecko API (No API key needed for basic access)
+      const response = await axios.get(`${API_CONFIG.COINGECKO_BASE_URL}/${API_CONFIG.ENDPOINTS.COINGECKO_PRICE}`)
+
+      const btcData = response.data.bitcoin
+
       const newPriceData = {
-        price: inrQuote.price,
-        change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
-        changePercentage: inrQuote.percent_change_24h,
+        price: btcData.inr,
+        change24h: (btcData.inr * btcData.inr_24h_change) / 100,
+        changePercentage: btcData.inr_24h_change,
         lastUpdated: new Date()
       }
-      
+
       setPriceData(newPriceData)
-      
+
       // Store the last successful price in localStorage for fallback
       localStorage.setItem('lastBitcoinPrice', JSON.stringify(newPriceData))
-      
+
     } catch (err) {
-      console.error('CoinMarketCap API failed:', err)
-      
+      console.error('CoinGecko API failed:', err)
+
       // Use last recorded price as fallback
       const lastPriceData = localStorage.getItem('lastBitcoinPrice')
       if (lastPriceData) {
@@ -68,10 +65,10 @@ export function BitcoinPrice() {
 
   useEffect(() => {
     fetchBitcoinPrice()
-    
+
     // Update price every 30 seconds
     const interval = setInterval(fetchBitcoinPrice, 30000)
-    
+
     return () => clearInterval(interval)
   }, [])
 
@@ -155,9 +152,8 @@ export function BitcoinPrice() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-white">{formatPrice(priceData.price)}</span>
-          <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${
-            isPositive ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-          }`}>
+          <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${isPositive ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+            }`}>
             {isPositive ? (
               <TrendingUp className="h-4 w-4" />
             ) : (
