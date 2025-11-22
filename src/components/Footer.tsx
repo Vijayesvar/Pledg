@@ -51,7 +51,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Pledg. All rights reserved. | Made for Indian crypto holders</p>
+          <p>&copy; 2025 Pledg. All rights reserved. | Made for Indian crypto holders</p>
         </div>
       </div>
     </footer>

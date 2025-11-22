@@ -2,42 +2,35 @@
 
 ## Overview
 
-The Pledg application now includes a backend API server that stores waitlist entries to a JSON file in the codebase.
+The Pledg application uses a Vercel-hosted backend API to store waitlist entries.
 
 ## Architecture
 
 ### Backend API Server
-- **Location**: `server/index.js`
-- **Port**: 3001
+- **Hosting**: Vercel
+- **URL**: `https://pledg-landing-page-ox84btgs6-vijayesvar0701-gmailcoms-projects.vercel.app`
 - **Framework**: Express.js with CORS enabled
 
 ### Data Storage
-- **Location**: `data/waitlist.json`
-- **Format**: JSON array of waitlist entries
+- Managed by the Vercel backend
+- Format: JSON array of waitlist entries
 
 ## How It Works
 
-1. **User Submission**: When a user fills out the waitlist form on the frontend, the data is sent to the backend API
+1. **User Submission**: When a user fills out the waitlist form on the frontend, the data is sent to the Vercel backend API
 2. **API Processing**: The backend validates the data, checks for duplicate emails, and stores the entry
-3. **File Storage**: Each entry is appended to `data/waitlist.json` with a unique ID and timestamp
+3. **File Storage**: Each entry is stored with a unique ID and timestamp
 
-## Running the System
+## Running the Application
 
-### Start Both Servers
+### Start Development Server
 
 ```bash
-# Terminal 1: Start frontend (Vite dev server on port 3000)
+# Start frontend (Vite dev server on port 3000)
 npm run dev
-
-# Terminal 2: Start backend API (Express server on port 3001)
-npm run server
 ```
 
-### Or Run Both Together
-
-```bash
-npm run dev:all
-```
+The frontend will automatically connect to the Vercel backend API.
 
 ## API Endpoints
 
@@ -122,13 +115,16 @@ Each waitlist entry contains:
 | `submittedAt` | string | ISO 8601 timestamp |
 | `status` | string | Entry status (default: "pending") |
 
-## Viewing Waitlist Data
+## Environment Configuration
 
-The waitlist data is stored in `data/waitlist.json`. You can:
+The frontend uses environment variables to configure the API URL:
 
-1. **View directly**: Open `data/waitlist.json` in any text editor
-2. **Use API**: GET request to `http://localhost:3001/api/waitlist`
-3. **Command line**: `cat data/waitlist.json` (Unix) or `type data\waitlist.json` (Windows)
+**`.env.example`:**
+```
+VITE_API_BASE_URL=https://pledg-landing-page-ox84btgs6-vijayesvar0701-gmailcoms-projects.vercel.app
+```
+
+Copy `.env.example` to `.env` for local development.
 
 ## Features
 
@@ -138,28 +134,15 @@ The waitlist data is stored in `data/waitlist.json`. You can:
 - ✅ **Validation**: Required fields are validated
 - ✅ **Error Handling**: Graceful error handling with user-friendly messages
 - ✅ **CORS Enabled**: Frontend can communicate with backend
-
-## Security Considerations
-
-> **Note**: This is a development setup. For production:
-> - Add authentication for the GET endpoint
-> - Implement rate limiting
-> - Use a proper database instead of JSON file
-> - Add input sanitization
-> - Enable HTTPS
-> - Add logging and monitoring
+- ✅ **Vercel Hosting**: Scalable, serverless backend
 
 ## Troubleshooting
 
-### Backend not starting
-- Check if port 3001 is available
-- Ensure all dependencies are installed: `npm install`
-
 ### Form submission fails
-- Verify backend server is running on port 3001
+- Verify the Vercel backend is accessible
 - Check browser console for CORS errors
-- Ensure `data/` directory exists
+- Ensure environment variables are set correctly
 
-### Data not saving
-- Check file permissions for `data/waitlist.json`
-- Verify backend server logs for errors
+### API URL Configuration
+- Check `.env` file exists and contains correct `VITE_API_BASE_URL`
+- Restart dev server after changing environment variables

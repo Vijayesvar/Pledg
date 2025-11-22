@@ -4,6 +4,7 @@ import { Mail, User, Phone, DollarSign, CheckCircle, AlertCircle } from 'lucide-
 import { NeopopButton } from './NeopopButton'
 import { NeopopInput } from './NeopopInput'
 import { NeopopCard } from './NeopopCard'
+import { getWaitlistApiUrl } from '../config/api'
 
 interface WaitlistData {
   name: string
@@ -37,14 +38,15 @@ export function WaitlistForm() {
     setSubmitStatus('idle')
 
     try {
-      // Send data to backend API
-      const response = await fetch('http://localhost:3001/api/waitlist', {
+      // Send data to Vercel backend API
+      const response = await fetch(getWaitlistApiUrl(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       })
+
 
       const data = await response.json()
 

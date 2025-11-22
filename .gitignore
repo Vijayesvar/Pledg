@@ -3,4 +3,3 @@ dist/
 dist2/
 .DS_Store
 *.log
-.env

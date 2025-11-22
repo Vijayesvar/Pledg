@@ -48,18 +48,24 @@ A modern, professional React-based website for Bitcoin-backed loans, specificall
    npm install
    ```
 
-2. **Start Development Server**
+2. **Configure Environment Variables**
+   ```bash
+   cp .env.example .env
+   ```
+   The `.env` file contains the Vercel backend API URL.
+
+3. **Start Development Server**
    ```bash
    npm run dev
    ```
    The application will be available at `http://localhost:3000`
 
-3. **Build for Production**
+4. **Build for Production**
    ```bash
    npm run build
    ```
 
-4. **Preview Production Build**
+5. **Preview Production Build**
    ```bash
    npm run preview
    ```
