@@ -1,4 +1,5 @@
-node_modules/
+# Updated to trigger CI
 dist2/
+node_modules/
 .DS_Store
 *.log
