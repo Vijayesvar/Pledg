@@ -21,25 +21,16 @@ export function BitcoinPrice() {
       setLoading(true)
       setError(null)
 
-      // Use CoinMarketCap API
-      const response = await axios.get(
-        `${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`,
-        {
-          headers: {
-            'X-CMC_PRO_API_KEY': API_CONFIG.COINMARKETCAP_KEY,
-            'Accept': 'application/json'
-          }
-        }
-      )
-
-      const btcData = response.data.data.BTC
-      const quote = btcData.quote.INR
+      // Use Cloudfare worker
+      const WORKER_URL = "https://lucky-wave-c3fe.wolf07279.workers.dev"
+      const response = await axios.get(`${WORKER_URL}?t=${Date.now()}`)
+      const btcData = response.data.bitcoin
 
       const newPriceData = {
-        price: quote.price,
-        change24h: quote.price * (quote.percent_change_24h / 100),
-        changePercentage: quote.percent_change_24h,
-        lastUpdated: new Date()
+          price: btcData.usd,          
+          change24h: 0,                
+          changePercentage: 0,         
+          lastUpdated: new Date()
       }
 
       setPriceData(newPriceData)
