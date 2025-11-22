@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, RefreshCw } from 'lucide-react'
 import axios from 'axios'
-import { API_CONFIG, getCoinMarketCapHeaders } from '@/config/api'
 
 interface BitcoinPriceData {
   price: number
@@ -21,20 +20,17 @@ export function BitcoinPrice() {
       setLoading(true)
       setError(null)
       
-      // Use only CoinMarketCap API
-      const response = await axios.get(`${API_CONFIG.COINMARKETCAP_BASE_URL}/${API_CONFIG.ENDPOINTS.COINMARKETCAP_QUOTES}`, {
-        headers: getCoinMarketCapHeaders()
-      })
-      
-      const btcData = response.data.data.BTC
-      const inrQuote = btcData.quote.INR
-      
+      const WORKER_URL = "https://lucky-wave-c3fe.wolf07279.workers.dev"
+      const response = await axios.get(`${WORKER_URL}?t=${Date.now()}`)
+      const btcData = response.data.bitcoin
+
       const newPriceData = {
-        price: inrQuote.price,
-        change24h: inrQuote.percent_change_24h * inrQuote.price / 100,
-        changePercentage: inrQuote.percent_change_24h,
-        lastUpdated: new Date()
+          price: btcData.usd,          // use Worker price
+          change24h: 0,                // optional: leave 0 or calculate if you have historical data
+          changePercentage: 0,         // optional: same here
+          lastUpdated: new Date()
       }
+
       
       setPriceData(newPriceData)
       
