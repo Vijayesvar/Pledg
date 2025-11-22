@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, RefreshCw } from 'lucide-react'
 import axios from 'axios'
-import { API_CONFIG } from '@/config/api'
 
 interface BitcoinPriceData {
   price: number
